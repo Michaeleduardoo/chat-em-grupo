@@ -23,11 +23,14 @@ const FileUploadModal = ({
     }
   };
 
-  const handleKeyDown = useCallback((e) => {
-    if (e.key === "Escape" && !isUploading) {
-      onCancel();
-    }
-  }, [isUploading, onCancel]);
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Escape" && !isUploading) {
+        onCancel();
+      }
+    },
+    [isUploading, onCancel]
+  );
 
   React.useEffect(() => {
     if (isOpen) {

@@ -1,13 +1,8 @@
-import React, {
-  useEffect,
-  useRef,
-  useMemo,
-  useCallback,
-} from "react";
+import React, { useEffect, useRef, useMemo, useCallback } from "react";
 import { MdPerson, MdCircle } from "react-icons/md";
 import "./style.css";
 
-const OnlineUsers = ({ onlineUsers = [], currentUser = null }) => {
+const OnlineUsers = ({ onlineUsers = [] }) => {
   const previousUsersRef = useRef([]);
 
   const getInitials = useCallback((name) => {
@@ -37,7 +32,6 @@ const OnlineUsers = ({ onlineUsers = [], currentUser = null }) => {
     return `${diffInDays}d`;
   }, []);
 
-
   const usersList = useMemo(
     () => (Array.isArray(onlineUsers) ? onlineUsers : []),
     [onlineUsers]
@@ -60,7 +54,6 @@ const OnlineUsers = ({ onlineUsers = [], currentUser = null }) => {
         </h3>
         <span className="online-count">{displayUsers.length}</span>
       </div>
-
 
       <div className="online-users-list">
         {displayUsers.length === 0 ? (

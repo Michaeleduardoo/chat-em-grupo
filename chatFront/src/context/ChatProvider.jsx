@@ -72,11 +72,13 @@ const chatReducer = (state, action) => {
         ...state,
         onlineUsers: action.payload.onlineUsers,
         totalUsersCount: action.payload.totalUsersCount,
-        uniqueUsersCount: action.payload.uniqueUsersCount || state.uniqueUsersCount,
+        uniqueUsersCount:
+          action.payload.uniqueUsersCount || state.uniqueUsersCount,
         stats: {
           ...state.stats,
           onlineUsersCount: action.payload.onlineUsers?.length || 0,
-          totalUsersCount: action.payload.totalUsersCount || state.stats.totalUsersCount,
+          totalUsersCount:
+            action.payload.totalUsersCount || state.stats.totalUsersCount,
         },
       };
     case "ADD_NOTIFICATION":
@@ -187,19 +189,23 @@ export const ChatProvider = ({ children }) => {
           payload: {
             ...state.stats,
             onlineUsersCount: data.onlineUsers?.length || 0,
-            totalUsersCount: data.totalUsersCount || state.stats.totalUsersCount,
+            totalUsersCount:
+              data.totalUsersCount || state.stats.totalUsersCount,
           },
         });
-        
+
         if (data.uniqueUsersCount !== undefined) {
-          dispatch({ type: "SET_UNIQUE_USERS_COUNT", payload: data.uniqueUsersCount });
+          dispatch({
+            type: "SET_UNIQUE_USERS_COUNT",
+            payload: data.uniqueUsersCount,
+          });
         }
       });
 
       socket.on("user-joined", (data) => {
         console.log("🔵 FRONTEND - user-joined recebido:", data);
         dispatch({ type: "UPDATE_USERS", payload: data });
-        
+
         dispatch({
           type: "ADD_NOTIFICATION",
           payload: {
@@ -208,15 +214,15 @@ export const ChatProvider = ({ children }) => {
             type: "user-joined",
             username: data.username,
             timestamp: data.timestamp,
-            duration: 5000
-          }
+            duration: 5000,
+          },
         });
       });
 
       socket.on("user-left", (data) => {
         console.log("🔴 FRONTEND - user-left recebido:", data);
         dispatch({ type: "UPDATE_USERS", payload: data });
-        
+
         dispatch({
           type: "ADD_NOTIFICATION",
           payload: {
@@ -225,8 +231,8 @@ export const ChatProvider = ({ children }) => {
             type: "user-left",
             username: data.username,
             timestamp: data.timestamp,
-            duration: 5000
-          }
+            duration: 5000,
+          },
         });
       });
 
@@ -275,6 +281,7 @@ export const ChatProvider = ({ children }) => {
         },
       });
     } catch (error) {
+      console.error("Erro ao buscar usuários online:", error);
       dispatch({ type: "SET_ONLINE_USERS", payload: [] });
       dispatch({
         type: "SET_STATS",
@@ -284,16 +291,19 @@ export const ChatProvider = ({ children }) => {
         },
       });
     }
-  }, []);
+  }, [state.stats]);
 
   const fetchStats = useCallback(async () => {
     try {
       const response = await axios.get("/stats");
       const stats = response.data || {};
       dispatch({ type: "SET_STATS", payload: stats });
-      
+
       if (stats.uniqueUsersCount !== undefined) {
-        dispatch({ type: "SET_UNIQUE_USERS_COUNT", payload: stats.uniqueUsersCount });
+        dispatch({
+          type: "SET_UNIQUE_USERS_COUNT",
+          payload: stats.uniqueUsersCount,
+        });
       }
     } catch {
       dispatch({
