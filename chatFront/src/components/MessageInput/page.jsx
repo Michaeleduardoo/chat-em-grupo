@@ -1,11 +1,16 @@
-import React, { useState, useRef } from 'react';
-import { useChat } from '../../context/ChatContext.jsx';
-import FilePreview from '../FilePreview/page.jsx';
-import { MdAttachFile, MdSend, MdHourglassEmpty } from 'react-icons/md';
-import './style.css';
+import { useState, useRef } from "react";
+import { useChat } from "../../context/ChatContext.jsx";
+import FilePreview from "../FilePreview/page.jsx";
+import { MdAttachFile, MdSend, MdHourglassEmpty } from "react-icons/md";
+import "./style.css";
 
-const MessageInput = ({ onFilePreview, showFilePreview, previewFile, onCancelPreview }) => {
-  const [text, setText] = useState('');
+const MessageInput = ({
+  onFilePreview,
+  showFilePreview,
+  previewFile,
+  onCancelPreview,
+}) => {
+  const [text, setText] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const { sendMessage, uploadFile } = useChat();
   const fileInputRef = useRef(null);
@@ -17,10 +22,10 @@ const MessageInput = ({ onFilePreview, showFilePreview, previewFile, onCancelPre
     e.preventDefault();
     if (text.trim() && !isUploading) {
       try {
-        await sendMessage(text.trim(), 'text');
-        setText('');
+        await sendMessage(text.trim(), "text");
+        setText("");
       } catch (error) {
-        console.error('Erro ao enviar mensagem:', error);
+        console.error("Erro ao enviar mensagem:", error);
       }
     }
   };
@@ -30,24 +35,24 @@ const MessageInput = ({ onFilePreview, showFilePreview, previewFile, onCancelPre
     if (!file) return;
 
     const allowedTypes = {
-      'image/jpeg': 'image',
-      'image/png': 'image',
-      'audio/mpeg': 'audio',
-      'audio/wav': 'audio'
+      "image/jpeg": "image",
+      "image/png": "image",
+      "audio/mpeg": "audio",
+      "audio/wav": "audio",
     };
 
     if (!allowedTypes[file.type]) {
-      alert('Tipo de arquivo não permitido. Use JPG, PNG, MP3 ou WAV.');
+      alert("Tipo de arquivo não permitido. Use JPG, PNG, MP3 ou WAV.");
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      alert('Arquivo muito grande. Máximo 10MB.');
+      alert("Arquivo muito grande. Máximo 10MB.");
       return;
     }
 
     onFilePreview(file);
-    e.target.value = '';
+    e.target.value = "";
   };
 
   const handleSendFile = async () => {
@@ -56,19 +61,21 @@ const MessageInput = ({ onFilePreview, showFilePreview, previewFile, onCancelPre
     setIsUploading(true);
     try {
       const fileUrl = await uploadFile(previewFile);
-      const fileType = previewFile.type.startsWith('image/') ? 'image' : 'audio';
+      const fileType = previewFile.type.startsWith("image/")
+        ? "image"
+        : "audio";
       await sendMessage(fileUrl, fileType);
       onCancelPreview();
     } catch (error) {
-      console.error('Erro ao enviar arquivo:', error);
-      alert('Erro ao enviar arquivo. Tente novamente.');
+      console.error("Erro ao enviar arquivo:", error);
+      alert("Erro ao enviar arquivo. Tente novamente.");
     } finally {
       setIsUploading(false);
     }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleTextSubmit(e);
     }
@@ -104,7 +111,7 @@ const MessageInput = ({ onFilePreview, showFilePreview, previewFile, onCancelPre
             ref={fileInputRef}
             onChange={handleFileChange}
             accept="image/jpeg,image/png,audio/mpeg,audio/wav"
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             aria-label="Selecionar arquivo"
           />
 
@@ -123,10 +130,8 @@ const MessageInput = ({ onFilePreview, showFilePreview, previewFile, onCancelPre
               aria-label="Digite sua mensagem"
               autoComplete="off"
             />
-            
-            <div className="char-counter">
-              {remainingChars}
-            </div>
+
+            <div className="char-counter">{remainingChars}</div>
           </div>
 
           <button

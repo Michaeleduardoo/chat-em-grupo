@@ -1,26 +1,22 @@
-import React, { useState } from "react";
 import { MdClose, MdPerson, MdMessage } from "react-icons/md";
 import OnlineUsers from "../OnlineUsers/page.jsx";
 import ChatStats from "../ChatStats/page.jsx";
 import "./style.css";
 
-const MobileMenu = ({ 
-  onlineUsers = [], 
-  currentUser = null, 
-  stats = {}, 
-  messagesCount = 0, 
+const MobileMenu = ({
+  onlineUsers = [],
+  currentUser = null,
+  stats = {},
+  messagesCount = 0,
   messages = [],
   isOpen = false,
-  onClose = () => {}
+  onClose = () => {},
 }) => {
-
   return (
     <>
-      {isOpen && (
-        <div className="mobile-menu-overlay" onClick={onClose}></div>
-      )}
+      {isOpen && <div className="mobile-menu-overlay" onClick={onClose}></div>}
 
-      <div className={`mobile-menu ${isOpen ? 'mobile-menu-open' : ''}`}>
+      <div className={`mobile-menu ${isOpen ? "mobile-menu-open" : ""}`}>
         <div className="mobile-menu-header">
           <h3 className="mobile-menu-title">Menu</h3>
           <button
@@ -42,7 +38,10 @@ const MobileMenu = ({
               </h4>
             </div>
             <div className="mobile-menu-section-content">
-              <OnlineUsers onlineUsers={onlineUsers} currentUser={currentUser} />
+              <OnlineUsers
+                onlineUsers={onlineUsers}
+                currentUser={currentUser}
+              />
             </div>
           </div>
 
