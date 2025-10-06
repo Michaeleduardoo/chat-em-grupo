@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useChat } from "../../context/ChatContext.jsx";
 import MessageList from "../MessageList/page.jsx";
 import FileUploadModal from "../FileUploadModal/page.jsx";
@@ -34,11 +34,9 @@ const Chat = () => {
     error,
     clearError,
     sendMessage,
-    setUser,
     logout,
     uploadFile,
     onlineUsers,
-    totalUsersCount,
     stats,
     notifications,
     removeNotification,
@@ -61,11 +59,11 @@ const Chat = () => {
   const scrollTimeoutRef = useRef(null);
   const logoutTimeoutRef = useRef(null);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     if (!isUserScrolling) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, [isUserScrolling]);
 
   const scrollToTop = () => {
     if (messagesContainerRef.current) {
@@ -105,7 +103,7 @@ const Chat = () => {
         scrollToBottom();
       }
     }
-  }, [messages, isUserScrolling]);
+  }, [messages, isUserScrolling, scrollToBottom]);
 
   useEffect(() => {
     return () => {
@@ -230,10 +228,6 @@ const Chat = () => {
     localStorage.setItem("theme", newTheme ? "light" : "dark");
   };
 
-  const clearMessages = () => {
-    console.log("Limpar mensagens");
-  };
-
   const handleLogout = () => {
     logout();
     localStorage.removeItem("theme");
@@ -293,19 +287,6 @@ const Chat = () => {
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
-  };
-
-  const scrollToMessageInput = () => {
-    const messageInputArea = document.querySelector(".message-input-modern");
-    if (messageInputArea) {
-      messageInputArea.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-      });
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 500);
-    }
   };
 
   if (loading && messages.length === 0) {
