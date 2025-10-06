@@ -13,10 +13,13 @@ const getInitialState = () => {
     error: null,
     onlineUsers: [],
     totalUsersCount: 0,
+    uniqueUsersCount: 0,
+    isInitialized: false,
     stats: {
       totalMessages: 0,
       onlineUsersCount: 0,
       totalUsersCount: 0,
+      uniqueUsersCount: 0,
       fileStats: {
         totalFiles: 0,
         imageFiles: 0,
@@ -58,6 +61,8 @@ const chatReducer = (state, action) => {
       return { ...state, onlineUsers: action.payload };
     case "SET_TOTAL_USERS_COUNT":
       return { ...state, totalUsersCount: action.payload };
+    case "SET_UNIQUE_USERS_COUNT":
+      return { ...state, uniqueUsersCount: action.payload };
     case "SET_STATS":
       return { ...state, stats: action.payload };
     case "SET_SOCKET":
@@ -67,9 +72,11 @@ const chatReducer = (state, action) => {
         ...state,
         onlineUsers: action.payload.onlineUsers,
         totalUsersCount: action.payload.totalUsersCount,
+        uniqueUsersCount: action.payload.uniqueUsersCount || state.uniqueUsersCount,
         stats: {
           ...state.stats,
           onlineUsersCount: action.payload.onlineUsers?.length || 0,
+          totalUsersCount: action.payload.totalUsersCount || state.stats.totalUsersCount,
         },
       };
     case "ADD_NOTIFICATION":
@@ -84,6 +91,8 @@ const chatReducer = (state, action) => {
           (n) => n.id !== action.payload
         ),
       };
+    case "SET_INITIALIZED":
+      return { ...state, isInitialized: action.payload };
     default:
       return state;
   }
@@ -178,8 +187,13 @@ export const ChatProvider = ({ children }) => {
           payload: {
             ...state.stats,
             onlineUsersCount: data.onlineUsers?.length || 0,
+            totalUsersCount: data.totalUsersCount || state.stats.totalUsersCount,
           },
         });
+        
+        if (data.uniqueUsersCount !== undefined) {
+          dispatch({ type: "SET_UNIQUE_USERS_COUNT", payload: data.uniqueUsersCount });
+        }
       });
 
       const heartbeatInterval = setInterval(() => {
@@ -243,6 +257,10 @@ export const ChatProvider = ({ children }) => {
       const response = await axios.get("/stats");
       const stats = response.data || {};
       dispatch({ type: "SET_STATS", payload: stats });
+      
+      if (stats.uniqueUsersCount !== undefined) {
+        dispatch({ type: "SET_UNIQUE_USERS_COUNT", payload: stats.uniqueUsersCount });
+      }
     } catch {
       dispatch({
         type: "SET_STATS",
@@ -295,6 +313,12 @@ export const ChatProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (!state.isInitialized) {
+      dispatch({ type: "SET_INITIALIZED", payload: true });
+    }
+  }, [state.isInitialized]);
+
+  useEffect(() => {
     if (state.user) {
       fetchMessages();
       fetchOnlineUsers();
@@ -303,11 +327,11 @@ export const ChatProvider = ({ children }) => {
       const interval = setInterval(() => {
         fetchMessages();
         fetchStats();
-      }, 5000);
+      }, 10000);
 
       return () => clearInterval(interval);
     }
-  }, [state.user, fetchMessages, fetchOnlineUsers, fetchStats]);
+  }, [fetchMessages, fetchOnlineUsers, fetchStats, state.user]);
 
   const value = {
     ...state,

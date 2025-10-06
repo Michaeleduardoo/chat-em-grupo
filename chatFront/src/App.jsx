@@ -5,7 +5,27 @@ import Chat from "./components/Chat/page.jsx";
 import "./App.css";
 
 const AppContent = () => {
-  const { user } = useChat();
+  const { user, isInitialized } = useChat();
+
+  if (!isInitialized) {
+    return (
+      <div className="app-container">
+        <div className="app-background">
+          <div className="gradient-orb gradient-orb-1"></div>
+          <div className="gradient-orb gradient-orb-2"></div>
+          <div className="gradient-orb gradient-orb-3"></div>
+          <div className="floating-shapes">
+            <div className="shape shape-1"></div>
+            <div className="shape shape-2"></div>
+            <div className="shape shape-3"></div>
+          </div>
+        </div>
+        <div className="app-content">
+          <div className="spinner"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container">

@@ -9,6 +9,8 @@ const MobileMenu = ({
   stats = {},
   messagesCount = 0,
   messages = [],
+  totalUsersCount = 0,
+  uniqueUsersCount = 0,
   isOpen = false,
   onClose = () => {},
 }) => {
@@ -58,6 +60,8 @@ const MobileMenu = ({
                 messagesCount={messagesCount}
                 onlineUsers={onlineUsers}
                 messages={messages}
+                totalUsersCount={totalUsersCount}
+                uniqueUsersCount={uniqueUsersCount}
               />
             </div>
           </div>

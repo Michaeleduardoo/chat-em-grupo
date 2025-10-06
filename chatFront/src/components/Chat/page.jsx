@@ -30,7 +30,6 @@ const Chat = () => {
   const {
     user,
     messages,
-    loading,
     error,
     clearError,
     sendMessage,
@@ -38,6 +37,8 @@ const Chat = () => {
     uploadFile,
     onlineUsers,
     stats,
+    totalUsersCount,
+    uniqueUsersCount,
     notifications,
     removeNotification,
   } = useChat();
@@ -289,15 +290,6 @@ const Chat = () => {
     setIsMobileMenuOpen(false);
   };
 
-  if (loading && messages.length === 0) {
-    return (
-      <div className="loading-state">
-        <div className="loading-spinner"></div>
-        <div className="loading-text">Carregando mensagens...</div>
-      </div>
-    );
-  }
-
   return (
     <div className="modern-chat-container">
       <div className="chat-navbar">
@@ -377,6 +369,8 @@ const Chat = () => {
               messagesCount={messages.length}
               onlineUsers={onlineUsers}
               messages={messages}
+              totalUsersCount={totalUsersCount}
+              uniqueUsersCount={uniqueUsersCount}
             />
           </div>
         </div>
@@ -604,6 +598,8 @@ const Chat = () => {
         stats={stats}
         messagesCount={messages.length}
         messages={messages}
+        totalUsersCount={totalUsersCount}
+        uniqueUsersCount={uniqueUsersCount}
         isOpen={isMobileMenuOpen}
         onClose={closeMobileMenu}
       />

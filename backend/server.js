@@ -61,7 +61,7 @@ let messages = [];
 
 let onlineUsers = new Map();
 let totalUsersCount = 0;
-let uniqueUsers = new Set();
+let uniqueUsersHistory = new Set(); // Histórico de usuários únicos que já entraram
 
 let fileStats = {
   totalFiles: 0,
@@ -199,18 +199,6 @@ app.get('/users/online', (req, res) => {
   }
 });
 
-app.get('/debug/unique-users', (req, res) => {
-  try {
-    res.json({
-      uniqueUsers: Array.from(uniqueUsers),
-      totalUniqueUsers: uniqueUsers.size,
-      onlineUsers: Array.from(onlineUsers.values()),
-      totalOnlineUsers: onlineUsers.size
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Erro interno do servidor' });
-  }
-});
 
 app.get('/stats', (req, res) => {
   try {
@@ -226,17 +214,19 @@ app.get('/stats', (req, res) => {
     const audioFiles = fileMessages.filter(msg => msg.type === 'audio').length;
 
     console.log(`=== STATS REQUEST ===`);
-    console.log(`Usuários únicos: ${Array.from(uniqueUsers)}`);
-    console.log(`Total usuários únicos: ${uniqueUsers.size}`);
     console.log(`Usuários online: ${Array.from(onlineUsers.values()).map(u => u.username)}`);
     console.log(`Total online: ${onlineUsers.size}`);
+    console.log(`Total únicos no histórico: ${uniqueUsersHistory.size}`);
     console.log(`Enviando onlineUsersCount: ${onlineUsers.size}`);
+    console.log(`Enviando totalUsersCount: ${onlineUsers.size}`);
+    console.log(`Enviando uniqueUsersCount: ${uniqueUsersHistory.size}`);
 
     res.json({
       totalMessages: messages.length,
       onlineUsersCount: onlineUsers.size,
-      totalUsersCount: uniqueUsers.size,
-      uniqueUsersList: Array.from(uniqueUsers),
+      totalUsersCount: onlineUsers.size,
+      uniqueUsersCount: uniqueUsersHistory.size,
+      uniqueUsersList: Array.from(onlineUsers.values()).map(u => u.username),
       fileStats: {
         totalFiles: fileStats.totalFiles,
         imageFiles: imageFiles,
@@ -275,32 +265,28 @@ io.on('connection', (socket) => {
 
   socket.on('user-join', (username) => {
     console.log(`Tentativa de entrada: ${username}`);
-    console.log(`Usuários únicos antes: ${Array.from(uniqueUsers)}`);
     console.log(`Total antes: ${totalUsersCount}`);
 
     if (username) {
-      if (!uniqueUsers.has(username)) {
-        uniqueUsers.add(username);
-        totalUsersCount = uniqueUsers.size;
-        console.log(`NOVO USUÁRIO ÚNICO: ${username} adicionado!`);
-        console.log(`Usuários únicos agora: ${Array.from(uniqueUsers)}`);
-        console.log(`Total agora: ${totalUsersCount}`);
-      } else {
-        console.log(`Usuário ${username} já existe, não adicionado ao contador`);
-      }
-
+      // Adiciona o usuário ao histórico de usuários únicos
+      uniqueUsersHistory.add(username);
+      
       onlineUsers.set(socket.id, {
         username: username,
         joinedAt: new Date().toISOString(),
         socketId: socket.id
       });
 
+      totalUsersCount = onlineUsers.size;
       console.log(`Usuário ${username} entrou no chat (online)`);
       console.log(`Total de usuários online agora: ${onlineUsers.size}`);
+      console.log(`Total de usuários únicos no histórico: ${uniqueUsersHistory.size}`);
+      console.log(`Total agora: ${totalUsersCount}`);
 
       const updateData = {
         onlineUsers: Array.from(onlineUsers.values()),
-        totalUsersCount: totalUsersCount
+        totalUsersCount: totalUsersCount,
+        uniqueUsersCount: uniqueUsersHistory.size
       };
 
       io.emit('users-updated', updateData);
@@ -313,11 +299,15 @@ io.on('connection', (socket) => {
     if (user) {
       console.log(`Usuário ${user.username} saiu do chat`);
       onlineUsers.delete(socket.id);
+      totalUsersCount = onlineUsers.size;
       console.log(`Total de usuários online agora: ${onlineUsers.size}`);
+      console.log(`Total de usuários únicos no histórico: ${uniqueUsersHistory.size}`);
+      console.log(`Total agora: ${totalUsersCount}`);
 
       const updateData = {
         onlineUsers: Array.from(onlineUsers.values()),
-        totalUsersCount: totalUsersCount
+        totalUsersCount: totalUsersCount,
+        uniqueUsersCount: uniqueUsersHistory.size
       };
 
       io.emit('users-updated', updateData);
@@ -351,9 +341,11 @@ setInterval(() => {
   }
 
   if (onlineUsers.size > 0) {
+    totalUsersCount = onlineUsers.size;
     io.emit('users-updated', {
       onlineUsers: Array.from(onlineUsers.values()),
-      totalUsersCount: totalUsersCount
+      totalUsersCount: totalUsersCount,
+      uniqueUsersCount: uniqueUsersHistory.size
     });
   }
 }, 30000);

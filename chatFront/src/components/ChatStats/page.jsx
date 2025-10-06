@@ -14,6 +14,8 @@ const ChatStats = ({
   messagesCount = 0,
   onlineUsers = [],
   messages = [],
+  totalUsersCount = 0,
+  uniqueUsersCount = 0,
 }) => {
   const formatNumber = (num) => {
     const number = Number(num) || 0;
@@ -40,13 +42,6 @@ const ChatStats = ({
 
   const finalMessagesCount = stats.totalMessages || messagesCount || 0;
 
-  const onlineCount =
-    stats.onlineUsersCount !== undefined
-      ? stats.onlineUsersCount
-      : Array.isArray(onlineUsers)
-      ? onlineUsers.length
-      : 0;
-
   const statItems = [
     {
       icon: MdMessage,
@@ -58,9 +53,16 @@ const ChatStats = ({
     {
       icon: MdPeople,
       label: "Online",
-      value: onlineCount,
+      value: totalUsersCount,
       color: "#10b981",
       description: `Usuários conectados agora`,
+    },
+    {
+      icon: MdPerson,
+      label: "Total Usuários",
+      value: uniqueUsersCount,
+      color: "#f59e0b",
+      description: `Usuários únicos que já entraram no chat`,
     },
     {
       icon: MdAttachFile,

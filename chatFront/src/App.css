@@ -230,6 +230,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity var(--transition-normal);
+  opacity: 1;
+}
+
+.app-content.loading {
+  opacity: 0.8;
 }
 
 @keyframes float {
