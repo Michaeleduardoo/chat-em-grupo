@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { MdPlayArrow, MdPause, MdVolumeUp, MdMoreVert } from "react-icons/md";
 import "./style.css";
 
-const AudioPlayer = ({ src, fileName = "Áudio" }) => {
+const AudioPlayer = ({ src }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -62,19 +62,6 @@ const AudioPlayer = ({ src, fileName = "Áudio" }) => {
     setVolume(newVolume);
     audio.volume = newVolume;
     setIsMuted(newVolume === 0);
-  };
-
-  const toggleMute = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isMuted) {
-      audio.volume = volume;
-      setIsMuted(false);
-    } else {
-      audio.volume = 0;
-      setIsMuted(true);
-    }
   };
 
   const formatTime = (time) => {
