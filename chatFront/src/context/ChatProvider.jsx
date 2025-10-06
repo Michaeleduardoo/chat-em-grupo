@@ -64,7 +64,12 @@ const chatReducer = (state, action) => {
     case "SET_UNIQUE_USERS_COUNT":
       return { ...state, uniqueUsersCount: action.payload };
     case "SET_STATS":
-      return { ...state, stats: action.payload };
+      return { 
+        ...state, 
+        stats: typeof action.payload === 'function' 
+          ? action.payload(state.stats) 
+          : action.payload 
+      };
     case "SET_SOCKET":
       return { ...state, socket: action.payload };
     case "UPDATE_USERS":
@@ -186,12 +191,12 @@ export const ChatProvider = ({ children }) => {
 
         dispatch({
           type: "SET_STATS",
-          payload: {
-            ...state.stats,
+          payload: (prevStats) => ({
+            ...prevStats,
             onlineUsersCount: data.onlineUsers?.length || 0,
             totalUsersCount:
-              data.totalUsersCount || state.stats.totalUsersCount,
-          },
+              data.totalUsersCount || prevStats.totalUsersCount,
+          }),
         });
 
         if (data.uniqueUsersCount !== undefined) {
@@ -239,7 +244,7 @@ export const ChatProvider = ({ children }) => {
       socket.on("username-taken", (data) => {
         console.log("❌ FRONTEND - username-taken recebido:", data);
         dispatch({ type: "SET_ERROR", payload: data.message });
-        
+
         // Disconnect the socket since the username was rejected
         socket.disconnect();
         dispatch({ type: "SET_SOCKET", payload: null });
@@ -285,23 +290,23 @@ export const ChatProvider = ({ children }) => {
 
       dispatch({
         type: "SET_STATS",
-        payload: {
-          ...state.stats,
+        payload: (prevStats) => ({
+          ...prevStats,
           onlineUsersCount: onlineUsers.length,
-        },
+        }),
       });
     } catch (error) {
       console.error("Erro ao buscar usuários online:", error);
       dispatch({ type: "SET_ONLINE_USERS", payload: [] });
       dispatch({
         type: "SET_STATS",
-        payload: {
-          ...state.stats,
+        payload: (prevStats) => ({
+          ...prevStats,
           onlineUsersCount: 0,
-        },
+        }),
       });
     }
-  }, [state.stats]);
+  }, []);
 
   const fetchStats = useCallback(async () => {
     try {

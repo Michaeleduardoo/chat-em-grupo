@@ -6,7 +6,7 @@ const ToastNotification = ({
   isVisible,
   message,
   type = "success",
-  duration = 3000,
+  duration = 2000,
   onClose,
 }) => {
   useEffect(() => {
