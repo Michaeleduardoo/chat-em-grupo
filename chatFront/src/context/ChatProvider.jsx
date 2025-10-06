@@ -64,11 +64,12 @@ const chatReducer = (state, action) => {
     case "SET_UNIQUE_USERS_COUNT":
       return { ...state, uniqueUsersCount: action.payload };
     case "SET_STATS":
-      return { 
-        ...state, 
-        stats: typeof action.payload === 'function' 
-          ? action.payload(state.stats) 
-          : action.payload 
+      return {
+        ...state,
+        stats:
+          typeof action.payload === "function"
+            ? action.payload(state.stats)
+            : action.payload,
       };
     case "SET_SOCKET":
       return { ...state, socket: action.payload };
@@ -194,8 +195,7 @@ export const ChatProvider = ({ children }) => {
           payload: (prevStats) => ({
             ...prevStats,
             onlineUsersCount: data.onlineUsers?.length || 0,
-            totalUsersCount:
-              data.totalUsersCount || prevStats.totalUsersCount,
+            totalUsersCount: data.totalUsersCount || prevStats.totalUsersCount,
           }),
         });
 
@@ -245,7 +245,6 @@ export const ChatProvider = ({ children }) => {
         console.log("❌ FRONTEND - username-taken recebido:", data);
         dispatch({ type: "SET_ERROR", payload: data.message });
 
-        // Disconnect the socket since the username was rejected
         socket.disconnect();
         dispatch({ type: "SET_SOCKET", payload: null });
         dispatch({ type: "SET_USER", payload: null });

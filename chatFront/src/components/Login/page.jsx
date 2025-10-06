@@ -12,9 +12,8 @@ const Login = () => {
     e.preventDefault();
     if (!username.trim()) return;
 
-    // Clear any previous errors
     clearError();
-    
+
     setLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -28,7 +27,6 @@ const Login = () => {
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
-    // Clear error when user starts typing
     if (error) {
       clearError();
     }
@@ -76,7 +74,7 @@ const Login = () => {
                   disabled={loading}
                   minLength={2}
                   maxLength={50}
-                  className={`input-modern ${error ? 'error' : ''}`}
+                  className={`input-modern ${error ? "error" : ""}`}
                   autoComplete="name"
                 />
                 <div className="input-glow"></div>
