@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   MdContentCopy,
   MdReply,
   MdEdit,
-  MdMoreVert,
   MdCheck,
   MdClose,
   MdCheckCircle,

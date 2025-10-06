@@ -1,4 +1,3 @@
-import React from "react";
 import { MdWavingHand } from "react-icons/md";
 import "./style.css";
 
