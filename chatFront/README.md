@@ -58,23 +58,17 @@ Este é o frontend da aplicação ChatGrupo, uma interface de chat em tempo real
 
 ## 📦 Instalação
 
-1. **Clone o repositório** (se ainda não tiver feito):
-   ```bash
-   git clone <url-do-repositorio>
-   cd chatGrupo-main/chatFront
-   ```
-
-2. **Instale as dependências**:
+1. **Instale as dependências**:
    ```bash
    npm install
    ```
 
-3. **Execute o servidor de desenvolvimento**:
+2. **Execute o servidor de desenvolvimento**:
    ```bash
    npm run dev
    ```
 
-4. **Acesse a aplicação**:
+3. **Acesse a aplicação**:
    - URL: `http://localhost:5173`
    - A aplicação estará rodando na porta 5173
 
@@ -375,17 +369,6 @@ npm test
 - Siga as convenções do React
 - Documente componentes complexos
 - Mantenha componentes pequenos e focados
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
-## 📞 Suporte
-
-Para suporte ou dúvidas:
-- Abra uma issue no repositório
-- Entre em contato com a equipe de desenvolvimento
-- Consulte a documentação do backend
 
 ## 🔗 Links Úteis
 
