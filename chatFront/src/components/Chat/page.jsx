@@ -243,7 +243,7 @@ const Chat = () => {
   };
 
   const handleLogoutCancel = () => {
-    console.log("Logout cancelado");
+    // Logout cancelado
   };
 
   const handleCancelLogout = () => {

@@ -208,7 +208,6 @@ export const ChatProvider = ({ children }) => {
       });
 
       socket.on("user-joined", (data) => {
-        console.log("🔵 FRONTEND - user-joined recebido:", data);
         dispatch({ type: "UPDATE_USERS", payload: data });
 
         dispatch({
@@ -225,7 +224,6 @@ export const ChatProvider = ({ children }) => {
       });
 
       socket.on("user-left", (data) => {
-        console.log("🔴 FRONTEND - user-left recebido:", data);
         dispatch({ type: "UPDATE_USERS", payload: data });
 
         dispatch({
@@ -242,7 +240,6 @@ export const ChatProvider = ({ children }) => {
       });
 
       socket.on("username-taken", (data) => {
-        console.log("❌ FRONTEND - username-taken recebido:", data);
         dispatch({ type: "SET_ERROR", payload: data.message });
         socket.disconnect();
         dispatch({ type: "SET_SOCKET", payload: null });

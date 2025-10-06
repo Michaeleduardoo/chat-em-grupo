@@ -22,7 +22,7 @@ const SoundEffects = ({ playNotification = false, playMessage = false }) => {
     if (playNotification && notificationAudioRef.current) {
       notificationAudioRef.current.volume = 0.3;
       notificationAudioRef.current.play().catch((e) => {
-        console.log("Erro ao reproduzir som de notificação:", e);
+        console.error("Erro ao reproduzir som de notificação:", e);
       });
     }
   }, [playNotification]);
@@ -31,7 +31,7 @@ const SoundEffects = ({ playNotification = false, playMessage = false }) => {
     if (playMessage && messageAudioRef.current) {
       messageAudioRef.current.volume = 0.2;
       messageAudioRef.current.play().catch((e) => {
-        console.log("Erro ao reproduzir som de mensagem:", e);
+        console.error("Erro ao reproduzir som de mensagem:", e);
       });
     }
   }, [playMessage]);

@@ -117,28 +117,20 @@ app.put("/messages/:id", (req, res) => {
     const { id } = req.params;
     const { content, sender } = req.body;
 
-    console.log("PUT /messages/:id - ID:", id);
-    console.log("PUT /messages/:id - Content:", content);
-    console.log("PUT /messages/:id - Sender:", sender);
-    console.log("PUT /messages/:id - Messages count:", messages.length);
 
     if (!content || !sender) {
-      console.log("PUT /messages/:id - Missing required fields");
       return res
         .status(400)
         .json({ error: "Campos obrigatórios: content, sender" });
     }
 
     const messageIndex = messages.findIndex((msg) => msg.id === id);
-    console.log("PUT /messages/:id - Message index:", messageIndex);
 
     if (messageIndex === -1) {
-      console.log("PUT /messages/:id - Message not found");
       return res.status(404).json({ error: "Mensagem não encontrada" });
     }
 
     if (messages[messageIndex].sender !== sender) {
-      console.log("PUT /messages/:id - User not authorized to edit");
       return res
         .status(403)
         .json({ error: "Você só pode editar suas próprias mensagens" });
@@ -151,7 +143,6 @@ app.put("/messages/:id", (req, res) => {
       editedAt: new Date().toISOString(),
     };
 
-    console.log("PUT /messages/:id - Message updated successfully");
     res.json(messages[messageIndex]);
   } catch (error) {
     console.error("PUT /messages/:id - Error:", error);
@@ -227,17 +218,6 @@ app.get("/stats", (req, res) => {
       (msg) => msg.type === "audio"
     ).length;
 
-    console.log(`=== STATS REQUEST ===`);
-    console.log(
-      `Usuários online: ${Array.from(onlineUsers.values()).map(
-        (u) => u.username
-      )}`
-    );
-    console.log(`Total online: ${onlineUsers.size}`);
-    console.log(`Total únicos no histórico: ${uniqueUsersHistory.size}`);
-    console.log(`Enviando onlineUsersCount: ${onlineUsers.size}`);
-    console.log(`Enviando totalUsersCount: ${onlineUsers.size}`);
-    console.log(`Enviando uniqueUsersCount: ${uniqueUsersHistory.size}`);
 
     res.json({
       totalMessages: messages.length,
@@ -281,11 +261,7 @@ app.use((error, req, res, next) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("Cliente conectado:", socket.id);
-
   socket.on("user-join", (username) => {
-    console.log(`Tentativa de entrada: ${username}`);
-    console.log(`Total antes: ${totalUsersCount}`);
 
     if (username) {
       const isUsernameOnline = Array.from(onlineUsers.values()).some(
@@ -293,7 +269,6 @@ io.on("connection", (socket) => {
       );
 
       if (isUsernameOnline) {
-        console.log(`❌ Nome '${username}' já está em uso`);
         socket.emit("username-taken", {
           message: `O nome "${username}" já está sendo usado. Escolha outro nome.`,
           username: username,
@@ -310,12 +285,6 @@ io.on("connection", (socket) => {
       });
 
       totalUsersCount = onlineUsers.size;
-      console.log(`Usuário ${username} entrou no chat (online)`);
-      console.log(`Total de usuários online agora: ${onlineUsers.size}`);
-      console.log(
-        `Total de usuários únicos no histórico: ${uniqueUsersHistory.size}`
-      );
-      console.log(`Total agora: ${totalUsersCount}`);
 
       const updateData = {
         onlineUsers: Array.from(onlineUsers.values()),
@@ -331,28 +300,16 @@ io.on("connection", (socket) => {
         uniqueUsersCount: uniqueUsersHistory.size,
       };
 
-      console.log("🟢 BACKEND - Emitindo user-joined:", userJoinedData);
       io.emit("user-joined", userJoinedData);
-
       io.emit("users-updated", updateData);
-      console.log(
-        "Evento users-updated enviado para todos os clientes:",
-        updateData
-      );
     }
   });
 
   socket.on("disconnect", () => {
     const user = onlineUsers.get(socket.id);
     if (user) {
-      console.log(`Usuário ${user.username} saiu do chat`);
       onlineUsers.delete(socket.id);
       totalUsersCount = onlineUsers.size;
-      console.log(`Total de usuários online agora: ${onlineUsers.size}`);
-      console.log(
-        `Total de usuários únicos no histórico: ${uniqueUsersHistory.size}`
-      );
-      console.log(`Total agora: ${totalUsersCount}`);
 
       const updateData = {
         onlineUsers: Array.from(onlineUsers.values()),
@@ -368,14 +325,8 @@ io.on("connection", (socket) => {
         uniqueUsersCount: uniqueUsersHistory.size,
       };
 
-      console.log("🔴 BACKEND - Emitindo user-left:", userLeftData);
       io.emit("user-left", userLeftData);
-
       io.emit("users-updated", updateData);
-      console.log(
-        "Evento users-updated enviado para todos os clientes (disconnect):",
-        updateData
-      );
     }
   });
 
@@ -402,7 +353,6 @@ setInterval(() => {
       : new Date(user.joinedAt);
     if (now - lastSeen > timeout) {
       onlineUsers.delete(socketId);
-      console.log(`Usuário ${user.username} removido por inatividade`);
     }
   }
 

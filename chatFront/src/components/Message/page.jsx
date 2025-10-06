@@ -76,12 +76,6 @@ const Message = ({
 
   const handleSaveEdit = () => {
     if (editText.trim() && editText !== message.content) {
-      console.log(
-        "Salvando edição - Message ID:",
-        message.id,
-        "Content:",
-        editText.trim()
-      );
       onSaveEdit && onSaveEdit(message.id, editText.trim());
     }
     setIsEditing(false);
