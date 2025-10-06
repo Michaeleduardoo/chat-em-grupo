@@ -1,5 +1,4 @@
-import React from 'react';
-import './style.css';
+import "./style.css";
 
 const TypingIndicator = ({ users = [] }) => {
   if (!users || users.length === 0) return null;

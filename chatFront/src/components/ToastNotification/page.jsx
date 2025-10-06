@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { MdCheckCircle, MdError, MdInfo, MdWarning } from "react-icons/md";
 import "./style.css";
 
-const ToastNotification = ({ 
-  isVisible, 
-  message, 
-  type = "success", 
+const ToastNotification = ({
+  isVisible,
+  message,
+  type = "success",
   duration = 3000,
-  onClose 
+  onClose,
 }) => {
   useEffect(() => {
     if (isVisible && duration > 0) {
       const timer = setTimeout(() => {
         onClose?.();
       }, duration);
-      
+
       return () => clearTimeout(timer);
     }
   }, [isVisible, duration, onClose]);
@@ -39,13 +39,9 @@ const ToastNotification = ({
   return (
     <div className={`toast-notification toast-${type}`}>
       <div className="toast-content">
-        <div className="toast-icon">
-          {getIcon()}
-        </div>
-        <div className="toast-message">
-          {message}
-        </div>
-        <button 
+        <div className="toast-icon">{getIcon()}</div>
+        <div className="toast-message">{message}</div>
+        <button
           className="toast-close"
           onClick={onClose}
           aria-label="Fechar notificação"
