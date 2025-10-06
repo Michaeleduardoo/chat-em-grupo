@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   MdMusicNote,
   MdImage,
@@ -23,11 +23,11 @@ const FileUploadModal = ({
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = useCallback((e) => {
     if (e.key === "Escape" && !isUploading) {
       onCancel();
     }
-  };
+  }, [isUploading, onCancel]);
 
   React.useEffect(() => {
     if (isOpen) {
@@ -39,7 +39,7 @@ const FileUploadModal = ({
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
     };
-  }, [isOpen, isUploading]);
+  }, [isOpen, handleKeyDown]);
 
   if (!isOpen || !file) return null;
 
