@@ -18,13 +18,13 @@
 .message.own-message .message-bubble {
   background: var(--accent-color);
   color: var(--text-inverse);
-  border-bottom-right-radius: var(--radius-sm);
+  border-top-right-radius: var(--radius-sm);
 }
 
 .message.own-message .message-bubble::before {
   content: "";
   position: absolute;
-  bottom: 0;
+  top: 10px;
   right: -4px;
   width: 0;
   height: 0;
@@ -37,19 +37,19 @@
   background-color: var(--accent-secondary);
   color: var(--text-primary);
   border: 1px solid var(--border-primary);
-  border-bottom-left-radius: var(--radius-sm);
+  border-top-left-radius: var(--radius-sm);
 }
 
 .message:not(.own-message) .message-bubble::before {
   content: "";
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: -5px;
   width: 0;
   height: 0;
   border-right: 8px solid var(--accent-secondary);
-  border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
+  border-top: 8px solid transparent;
 }
 
 .message-avatar {
