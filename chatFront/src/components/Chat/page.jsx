@@ -9,7 +9,7 @@ import ChatStats from "../ChatStats/page.jsx";
 import MobileMenu from "../MobileMenu/page.jsx";
 import TypingIndicator from "../TypingIndicator/page.jsx";
 import EmojiPicker from "../EmojiPicker/page.jsx";
-import ToastNotification from "../ToastNotification/page.jsx";
+import ToastContainer from "../ToastContainer/page.jsx";
 import {
   MdChat,
   MdLogout,
@@ -580,16 +580,10 @@ const Chat = () => {
         onClose={() => setShowEmojiPicker(false)}
       />
 
-      {notifications.map((notification) => (
-        <ToastNotification
-          key={notification.id}
-          isVisible={true}
-          message={notification.message}
-          type={notification.type}
-          duration={0}
-          onClose={() => removeNotification(notification.id)}
-        />
-      ))}
+      <ToastContainer
+        notifications={notifications}
+        onRemoveNotification={removeNotification}
+      />
 
       <MobileMenu
         onlineUsers={onlineUsers}

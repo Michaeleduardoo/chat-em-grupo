@@ -1,0 +1,39 @@
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.toast-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  pointer-events: auto;
+  transition: transform 0.3s ease-out;
+}
+
+.toast-wrapper .toast-notification {
+  position: relative;
+  top: auto;
+  right: auto;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .toast-container {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+  }
+  
+  .toast-wrapper {
+    right: 0;
+    left: 0;
+  }
+  
+  .toast-wrapper .toast-notification {
+    margin-bottom: 8px;
+  }
+}

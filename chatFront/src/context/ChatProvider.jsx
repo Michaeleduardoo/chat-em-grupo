@@ -196,6 +196,45 @@ export const ChatProvider = ({ children }) => {
         }
       });
 
+      // Escuta eventos específicos de usuários entrando e saindo
+      socket.on("user-joined", (data) => {
+        console.log("Usuário entrou:", data.username);
+        // Atualiza a lista de usuários online
+        dispatch({ type: "UPDATE_USERS", payload: data });
+        
+        // Adiciona notificação de entrada
+        dispatch({
+          type: "ADD_NOTIFICATION",
+          payload: {
+            id: `joined-${data.username}-${data.timestamp}`,
+            message: `${data.username} entrou no chat`,
+            type: "user-joined",
+            username: data.username,
+            timestamp: data.timestamp,
+            duration: 5000
+          }
+        });
+      });
+
+      socket.on("user-left", (data) => {
+        console.log("Usuário saiu:", data.username);
+        // Atualiza a lista de usuários online
+        dispatch({ type: "UPDATE_USERS", payload: data });
+        
+        // Adiciona notificação de saída
+        dispatch({
+          type: "ADD_NOTIFICATION",
+          payload: {
+            id: `left-${data.username}-${data.timestamp}`,
+            message: `${data.username} saiu do chat`,
+            type: "user-left",
+            username: data.username,
+            timestamp: data.timestamp,
+            duration: 5000
+          }
+        });
+      });
+
       const heartbeatInterval = setInterval(() => {
         if (socket.connected) {
           socket.emit("user-heartbeat", user);

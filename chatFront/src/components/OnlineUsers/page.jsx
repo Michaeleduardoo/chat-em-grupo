@@ -1,5 +1,4 @@
 import React, {
-  useState,
   useEffect,
   useRef,
   useMemo,
@@ -10,7 +9,6 @@ import "./style.css";
 
 const OnlineUsers = ({ onlineUsers = [], currentUser = null }) => {
   const previousUsersRef = useRef([]);
-  const [userChanges, setUserChanges] = useState([]);
 
   const getInitials = useCallback((name) => {
     if (!name) return "??";
@@ -39,99 +37,15 @@ const OnlineUsers = ({ onlineUsers = [], currentUser = null }) => {
     return `${diffInDays}d`;
   }, []);
 
-  const clearNotification = useCallback((change) => {
-    setUserChanges((prev) =>
-      prev.filter(
-        (c) =>
-          !(
-            c.type === change.type &&
-            c.username === change.username &&
-            c.timestamp === change.timestamp
-          )
-      )
-    );
-  }, []);
 
   const usersList = useMemo(
     () => (Array.isArray(onlineUsers) ? onlineUsers : []),
     [onlineUsers]
   );
 
-  const currentUsernames = useMemo(
-    () => usersList.map((user) => user.username).sort(),
-    [usersList]
-  );
-
   useEffect(() => {
-    if (previousUsersRef.current.length === 0) {
-      previousUsersRef.current = usersList;
-      return;
-    }
-
-    const previousUsernames = previousUsersRef.current
-      .map((user) => user.username)
-      .sort();
-
-    const hasChanged =
-      JSON.stringify(currentUsernames) !== JSON.stringify(previousUsernames);
-
-    if (!hasChanged) {
-      previousUsersRef.current = usersList;
-      return;
-    }
-
-    const newUsers = currentUsernames.filter(
-      (username) => !previousUsernames.includes(username)
-    );
-    const leftUsers = previousUsernames.filter(
-      (username) => !currentUsernames.includes(username)
-    );
-
-    if (newUsers.length > 0 || leftUsers.length > 0) {
-      const changes = [];
-      const now = Date.now();
-
-      newUsers.forEach((username) => {
-        if (username !== currentUser) {
-          changes.push({ type: "joined", username, timestamp: now });
-        }
-      });
-      leftUsers.forEach((username) => {
-        if (username !== currentUser) {
-          changes.push({ type: "left", username, timestamp: now });
-        }
-      });
-
-      if (changes.length > 0) {
-        setUserChanges((prev) => {
-          const existingKeys = new Set(
-            prev.map((change) => `${change.type}-${change.username}`)
-          );
-          const newChanges = changes.filter(
-            (change) => !existingKeys.has(`${change.type}-${change.username}`)
-          );
-          return [...prev, ...newChanges];
-        });
-
-        changes.forEach((change) => {
-          setTimeout(() => {
-            setUserChanges((prev) =>
-              prev.filter(
-                (c) =>
-                  !(
-                    c.type === change.type &&
-                    c.username === change.username &&
-                    c.timestamp === change.timestamp
-                  )
-              )
-            );
-          }, 3000);
-        });
-      }
-    }
-
     previousUsersRef.current = usersList;
-  }, [currentUsernames, currentUser, usersList]);
+  }, [usersList]);
 
   const displayUsers = useMemo(() => {
     return usersList.length > 0
@@ -157,28 +71,6 @@ const OnlineUsers = ({ onlineUsers = [], currentUser = null }) => {
         <span className="online-count">{displayUsers.length}</span>
       </div>
 
-      {userChanges.length > 0 && (
-        <div className="user-changes-notification">
-          {userChanges.map((change) => (
-            <div
-              key={`${change.type}-${change.username}-${change.timestamp}`}
-              className={`change-notification ${change.type}`}
-            >
-              <span className="notification-content">
-                {change.type === "joined" ? "✅" : "❌"} {change.username}{" "}
-                {change.type === "joined" ? "entrou" : "saiu"}
-              </span>
-              <button
-                className="close-notification"
-                onClick={() => clearNotification(change)}
-                aria-label="Fechar notificação"
-              >
-                ×
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
 
       <div className="online-users-list">
         {displayUsers.length === 0 ? (

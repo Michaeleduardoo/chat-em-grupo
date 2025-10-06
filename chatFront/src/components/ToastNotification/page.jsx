@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { MdCheckCircle, MdError, MdInfo, MdWarning } from "react-icons/md";
+import { MdCheckCircle, MdError, MdInfo, MdWarning, MdPersonAdd, MdPersonRemove } from "react-icons/md";
 import "./style.css";
 
 const ToastNotification = ({
@@ -31,6 +31,10 @@ const ToastNotification = ({
         return <MdWarning size={20} />;
       case "info":
         return <MdInfo size={20} />;
+      case "user-joined":
+        return <MdPersonAdd size={20} />;
+      case "user-left":
+        return <MdPersonRemove size={20} />;
       default:
         return <MdCheckCircle size={20} />;
     }
