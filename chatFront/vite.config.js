@@ -17,6 +17,14 @@ export default defineConfig({
       '/upload': {
         target: 'http://localhost:3000',
         changeOrigin: true
+      },
+      '/users': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
+      },
+      '/stats': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
       }
     }
   }

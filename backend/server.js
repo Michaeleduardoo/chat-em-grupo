@@ -289,6 +289,18 @@ io.on('connection', (socket) => {
         uniqueUsersCount: uniqueUsersHistory.size
       };
 
+      // Emite evento específico de usuário entrando
+      const userJoinedData = {
+        username: username,
+        timestamp: new Date().toISOString(),
+        onlineUsers: Array.from(onlineUsers.values()),
+        totalUsersCount: totalUsersCount,
+        uniqueUsersCount: uniqueUsersHistory.size
+      };
+      
+      console.log("🟢 BACKEND - Emitindo user-joined:", userJoinedData);
+      io.emit('user-joined', userJoinedData);
+
       io.emit('users-updated', updateData);
       console.log('Evento users-updated enviado para todos os clientes:', updateData);
     }
@@ -309,6 +321,18 @@ io.on('connection', (socket) => {
         totalUsersCount: totalUsersCount,
         uniqueUsersCount: uniqueUsersHistory.size
       };
+
+      // Emite evento específico de usuário saindo
+      const userLeftData = {
+        username: user.username,
+        timestamp: new Date().toISOString(),
+        onlineUsers: Array.from(onlineUsers.values()),
+        totalUsersCount: totalUsersCount,
+        uniqueUsersCount: uniqueUsersHistory.size
+      };
+      
+      console.log("🔴 BACKEND - Emitindo user-left:", userLeftData);
+      io.emit('user-left', userLeftData);
 
       io.emit('users-updated', updateData);
       console.log('Evento users-updated enviado para todos os clientes (disconnect):', updateData);

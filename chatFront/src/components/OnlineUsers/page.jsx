@@ -48,18 +48,9 @@ const OnlineUsers = ({ onlineUsers = [], currentUser = null }) => {
   }, [usersList]);
 
   const displayUsers = useMemo(() => {
-    return usersList.length > 0
-      ? usersList
-      : currentUser
-      ? [
-          {
-            username: currentUser,
-            joinedAt: new Date().toISOString(),
-            socketId: "current-user",
-          },
-        ]
-      : [];
-  }, [usersList, currentUser]);
+    // Sempre mostra a lista de usuários online, mesmo se estiver vazia
+    return usersList;
+  }, [usersList]);
 
   return (
     <div className="online-users-section">

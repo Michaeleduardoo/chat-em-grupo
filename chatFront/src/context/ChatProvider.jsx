@@ -198,7 +198,7 @@ export const ChatProvider = ({ children }) => {
 
       // Escuta eventos específicos de usuários entrando e saindo
       socket.on("user-joined", (data) => {
-        console.log("Usuário entrou:", data.username);
+        console.log("🔵 FRONTEND - user-joined recebido:", data);
         // Atualiza a lista de usuários online
         dispatch({ type: "UPDATE_USERS", payload: data });
         
@@ -217,7 +217,7 @@ export const ChatProvider = ({ children }) => {
       });
 
       socket.on("user-left", (data) => {
-        console.log("Usuário saiu:", data.username);
+        console.log("🔴 FRONTEND - user-left recebido:", data);
         // Atualiza a lista de usuários online
         dispatch({ type: "UPDATE_USERS", payload: data });
         
@@ -279,7 +279,7 @@ export const ChatProvider = ({ children }) => {
           onlineUsersCount: onlineUsers.length,
         },
       });
-    } catch {
+    } catch (error) {
       dispatch({ type: "SET_ONLINE_USERS", payload: [] });
       dispatch({
         type: "SET_STATS",
@@ -289,7 +289,7 @@ export const ChatProvider = ({ children }) => {
         },
       });
     }
-  }, [state.stats]);
+  }, []);
 
   const fetchStats = useCallback(async () => {
     try {
