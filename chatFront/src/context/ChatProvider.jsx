@@ -196,13 +196,10 @@ export const ChatProvider = ({ children }) => {
         }
       });
 
-      // Escuta eventos específicos de usuários entrando e saindo
       socket.on("user-joined", (data) => {
         console.log("🔵 FRONTEND - user-joined recebido:", data);
-        // Atualiza a lista de usuários online
         dispatch({ type: "UPDATE_USERS", payload: data });
         
-        // Adiciona notificação de entrada
         dispatch({
           type: "ADD_NOTIFICATION",
           payload: {
@@ -218,10 +215,8 @@ export const ChatProvider = ({ children }) => {
 
       socket.on("user-left", (data) => {
         console.log("🔴 FRONTEND - user-left recebido:", data);
-        // Atualiza a lista de usuários online
         dispatch({ type: "UPDATE_USERS", payload: data });
         
-        // Adiciona notificação de saída
         dispatch({
           type: "ADD_NOTIFICATION",
           payload: {

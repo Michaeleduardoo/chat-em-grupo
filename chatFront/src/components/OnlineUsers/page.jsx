@@ -48,7 +48,6 @@ const OnlineUsers = ({ onlineUsers = [], currentUser = null }) => {
   }, [usersList]);
 
   const displayUsers = useMemo(() => {
-    // Sempre mostra a lista de usuários online, mesmo se estiver vazia
     return usersList;
   }, [usersList]);
 

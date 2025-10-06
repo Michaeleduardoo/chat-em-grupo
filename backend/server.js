@@ -61,7 +61,7 @@ let messages = [];
 
 let onlineUsers = new Map();
 let totalUsersCount = 0;
-let uniqueUsersHistory = new Set(); // Histórico de usuários únicos que já entraram
+let uniqueUsersHistory = new Set();
 
 let fileStats = {
   totalFiles: 0,
@@ -268,7 +268,6 @@ io.on('connection', (socket) => {
     console.log(`Total antes: ${totalUsersCount}`);
 
     if (username) {
-      // Adiciona o usuário ao histórico de usuários únicos
       uniqueUsersHistory.add(username);
       
       onlineUsers.set(socket.id, {
@@ -289,7 +288,6 @@ io.on('connection', (socket) => {
         uniqueUsersCount: uniqueUsersHistory.size
       };
 
-      // Emite evento específico de usuário entrando
       const userJoinedData = {
         username: username,
         timestamp: new Date().toISOString(),
@@ -322,7 +320,6 @@ io.on('connection', (socket) => {
         uniqueUsersCount: uniqueUsersHistory.size
       };
 
-      // Emite evento específico de usuário saindo
       const userLeftData = {
         username: user.username,
         timestamp: new Date().toISOString(),
