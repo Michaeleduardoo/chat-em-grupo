@@ -1,4 +1,3 @@
-import React from "react";
 import { ChatProvider } from "./context/ChatProvider.jsx";
 import { useChat } from "./context/useChat.jsx";
 import Login from "./components/Login/page.jsx";
@@ -20,9 +19,7 @@ const AppContent = () => {
           <div className="shape shape-3"></div>
         </div>
       </div>
-      <div className="app-content">
-        {!user ? <Login /> : <Chat />}
-      </div>
+      <div className="app-content">{!user ? <Login /> : <Chat />}</div>
     </div>
   );
 };
