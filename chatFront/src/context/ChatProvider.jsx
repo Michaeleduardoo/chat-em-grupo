@@ -244,7 +244,6 @@ export const ChatProvider = ({ children }) => {
       socket.on("username-taken", (data) => {
         console.log("❌ FRONTEND - username-taken recebido:", data);
         dispatch({ type: "SET_ERROR", payload: data.message });
-
         socket.disconnect();
         dispatch({ type: "SET_SOCKET", payload: null });
         dispatch({ type: "SET_USER", payload: null });
