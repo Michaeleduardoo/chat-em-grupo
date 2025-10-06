@@ -24,18 +24,12 @@ Este é o servidor backend que fornece todas as funcionalidades necessárias par
 
 ## 📦 Instalação
 
-1. **Clone o repositório** (se ainda não tiver feito):
-   ```bash
-   git clone <url-do-repositorio>
-   cd chatGrupo-main/backend
-   ```
-
-2. **Instale as dependências**:
+1. **Instale as dependências**:
    ```bash
    npm install
    ```
 
-3. **Execute o servidor**:
+2. **Execute o servidor**:
    ```bash
    # Modo desenvolvimento (com auto-reload)
    npm run dev
@@ -44,7 +38,7 @@ Este é o servidor backend que fornece todas as funcionalidades necessárias par
    npm start
    ```
 
-4. **Acesse o servidor**:
+3. **Acesse o servidor**:
    - URL: `http://localhost:3000`
    - O servidor estará rodando na porta 3000
 
