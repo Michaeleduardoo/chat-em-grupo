@@ -778,7 +778,6 @@
     flex-direction: column;
   }
 
-  /* Ocultar sidebar em mobile - agora está no menu hambúrguer */
   .chat-sidebar-modern {
     display: none;
   }

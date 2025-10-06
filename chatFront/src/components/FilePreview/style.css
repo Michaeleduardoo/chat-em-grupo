@@ -283,7 +283,6 @@
   transform: translateY(-1px);
 }
 
-/* Efeito de loading no botão de envio */
 .send-button.loading {
   pointer-events: none;
 }
@@ -302,7 +301,6 @@
   animation: spin 1s linear infinite;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .file-preview {
     margin-bottom: 16px;

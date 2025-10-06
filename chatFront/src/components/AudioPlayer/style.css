@@ -1,4 +1,3 @@
-/* Audio Player Component */
 .audio-player {
   display: flex;
   align-items: center;
@@ -18,7 +17,6 @@
   transform: translateY(-1px);
 }
 
-/* Play Button */
 .audio-play-btn {
   display: flex;
   align-items: center;
@@ -44,7 +42,6 @@
   transform: scale(0.95);
 }
 
-/* Time Display */
 .audio-time {
   font-size: var(--font-size-sm);
   color: var(--text-secondary);
@@ -54,7 +51,6 @@
   font-family: var(--font-family-mono);
 }
 
-/* Progress Bar */
 .audio-progress {
   flex: 1;
   height: 20px;
@@ -85,7 +81,6 @@
   position: relative;
 }
 
-/* Volume Container */
 .audio-volume-container {
   position: relative;
   display: flex;
@@ -168,7 +163,6 @@
   transform: scale(1.2);
 }
 
-/* More Options Button */
 .audio-more-btn {
   display: flex;
   align-items: center;
@@ -189,7 +183,6 @@
   transform: scale(1.1);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .audio-player {
     min-width: 260px;
@@ -246,7 +239,6 @@
   }
 }
 
-/* Animation for progress bar */
 @keyframes progressPulse {
   0%,
   100% {
@@ -261,7 +253,6 @@
   animation: progressPulse 2s ease-in-out infinite;
 }
 
-/* Focus states for accessibility */
 .audio-play-btn:focus,
 .audio-volume-btn:focus,
 .audio-more-btn:focus {

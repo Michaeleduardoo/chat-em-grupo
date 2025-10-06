@@ -1,4 +1,3 @@
-/* Popconfirm Component */
 .popconfirm-container {
   position: relative;
   display: inline-block;
@@ -83,7 +82,6 @@
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
-/* Arrows */
 .popconfirm-arrow {
   position: absolute;
   width: 0;
@@ -120,7 +118,6 @@
   border-right-color: var(--bg-card);
 }
 
-/* Animações */
 @keyframes popconfirmFadeIn {
   from {
     opacity: 0;
@@ -132,7 +129,6 @@
   }
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .popconfirm-popup {
     min-width: 180px;

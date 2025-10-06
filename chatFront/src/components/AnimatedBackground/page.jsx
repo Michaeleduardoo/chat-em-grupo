@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import './style.css';
+import { useEffect, useRef } from "react";
+import "./style.css";
 
 const AnimatedBackground = () => {
   const canvasRef = useRef(null);
@@ -8,7 +8,7 @@ const AnimatedBackground = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     let animationId;
 
     const particles = [];
@@ -81,14 +81,16 @@ const AnimatedBackground = () => {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 * (1 - distance / 80)})`;
+            ctx.strokeStyle = `rgba(59, 130, 246, ${
+              0.1 * (1 - distance / 80)
+            })`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
       }
 
-      particles.forEach(particle => {
+      particles.forEach((particle) => {
         particle.update();
         particle.draw();
       });
@@ -108,7 +110,7 @@ const AnimatedBackground = () => {
 
     const handleResize = () => {
       resizeCanvas();
-      particles.forEach(particle => {
+      particles.forEach((particle) => {
         particle.x = Math.random() * canvas.width;
         particle.y = Math.random() * canvas.height;
         particle.baseX = particle.x;
@@ -117,13 +119,13 @@ const AnimatedBackground = () => {
     };
 
     resizeCanvas();
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("resize", handleResize);
     animate();
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationId);
     };
   }, []);
@@ -133,13 +135,13 @@ const AnimatedBackground = () => {
       ref={canvasRef}
       className="animated-background"
       style={{
-        position: 'fixed',
+        position: "fixed",
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
+        width: "100%",
+        height: "100%",
         zIndex: -1,
-        pointerEvents: 'none'
+        pointerEvents: "none",
       }}
     />
   );

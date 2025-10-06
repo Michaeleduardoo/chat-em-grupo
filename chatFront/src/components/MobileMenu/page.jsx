@@ -16,12 +16,10 @@ const MobileMenu = ({
 
   return (
     <>
-      {/* Overlay */}
       {isOpen && (
         <div className="mobile-menu-overlay" onClick={onClose}></div>
       )}
 
-      {/* Menu lateral */}
       <div className={`mobile-menu ${isOpen ? 'mobile-menu-open' : ''}`}>
         <div className="mobile-menu-header">
           <h3 className="mobile-menu-title">Menu</h3>
@@ -36,7 +34,6 @@ const MobileMenu = ({
         </div>
 
         <div className="mobile-menu-content">
-          {/* Usuários Online */}
           <div className="mobile-menu-section">
             <div className="mobile-menu-section-header">
               <h4 className="mobile-menu-section-title">
@@ -49,7 +46,6 @@ const MobileMenu = ({
             </div>
           </div>
 
-          {/* Estatísticas */}
           <div className="mobile-menu-section">
             <div className="mobile-menu-section-header">
               <h4 className="mobile-menu-section-title">

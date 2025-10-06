@@ -1,4 +1,3 @@
-/* ===== MODERN LOGIN STYLES ===== */
 
 .modern-login-container {
   width: 100%;
@@ -12,7 +11,6 @@
   overflow: hidden;
 }
 
-/* ===== LOGIN CARD ===== */
 .login-card-modern {
   width: 100%;
   max-width: 480px;
@@ -42,7 +40,6 @@
   );
 }
 
-/* ===== LOGIN HEADER ===== */
 .login-header-modern {
   padding: var(--space-8) var(--space-8) var(--space-6);
   text-align: center;
@@ -114,7 +111,6 @@
   font-weight: var(--font-weight-normal);
 }
 
-/* ===== LOGIN BODY ===== */
 .login-body-modern {
   padding: 0 var(--space-8) var(--space-8);
 }
@@ -199,7 +195,6 @@
   opacity: 1;
 }
 
-/* ===== MODERN BUTTON ===== */
 .btn-modern {
   position: relative;
   display: inline-flex;
@@ -291,7 +286,6 @@
   opacity: 0;
 }
 
-/* ===== LOGIN FOOTER ===== */
 .login-footer-modern {
   padding: var(--space-8);
   background: rgba(255, 255, 255, 0.02);
@@ -350,7 +344,6 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ===== ANIMATIONS ===== */
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -371,7 +364,6 @@
   }
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 640px) {
   .modern-login-container {
     padding: var(--space-4);
@@ -483,7 +475,6 @@
   }
 }
 
-/* ===== LIGHT THEME ADJUSTMENTS ===== */
 [data-theme="light"] .login-card-modern {
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(0, 0, 0, 0.1);

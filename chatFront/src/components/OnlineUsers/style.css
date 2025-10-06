@@ -30,7 +30,6 @@
   text-align: center;
 }
 
-/* Notificações de mudanças */
 .user-changes-notification {
   margin-bottom: 12px;
   display: flex;
@@ -208,7 +207,6 @@
   color: var(--text-tertiary);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .online-user-item {
     padding: 6px;
