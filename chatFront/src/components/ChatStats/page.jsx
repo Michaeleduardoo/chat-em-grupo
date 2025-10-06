@@ -26,14 +26,6 @@ const ChatStats = ({
     return number.toString();
   };
 
-  const formatFileSize = (bytes) => {
-    if (bytes === 0) return "0 B";
-    const k = 1024;
-    const sizes = ["B", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
-  };
-
   const imageFiles =
     stats.fileStats?.imageFiles ||
     (Array.isArray(messages)
@@ -45,7 +37,6 @@ const ChatStats = ({
       ? messages.filter((msg) => msg.type === "audio").length
       : 0);
   const totalFiles = stats.fileStats?.totalFiles || imageFiles + audioFiles;
-  const messagesPerHour = stats.activityStats?.messagesPerHour || 0;
 
   const finalMessagesCount = stats.totalMessages || messagesCount || 0;
 
