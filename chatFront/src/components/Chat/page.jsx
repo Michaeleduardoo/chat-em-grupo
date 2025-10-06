@@ -367,7 +367,6 @@ const Chat = () => {
             <ChatStats
               stats={stats}
               messagesCount={messages.length}
-              onlineUsers={onlineUsers}
               messages={messages}
               totalUsersCount={totalUsersCount}
               uniqueUsersCount={uniqueUsersCount}

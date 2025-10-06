@@ -12,7 +12,6 @@ import "./style.css";
 const ChatStats = ({
   stats = {},
   messagesCount = 0,
-  onlineUsers = [],
   messages = [],
   totalUsersCount = 0,
   uniqueUsersCount = 0,
