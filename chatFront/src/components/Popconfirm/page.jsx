@@ -1,14 +1,14 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import './style.css';
+import { useState, useRef, useEffect, useCallback } from "react";
+import "./style.css";
 
-const Popconfirm = ({ 
-  children, 
-  title, 
-  onConfirm, 
+const Popconfirm = ({
+  children,
+  title,
+  onConfirm,
   onCancel,
-  confirmText = "Sim", 
+  confirmText = "Sim",
   cancelText = "Não",
-  placement = "top"
+  placement = "top",
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
@@ -20,23 +20,23 @@ const Popconfirm = ({
       const rect = triggerRef.current.getBoundingClientRect();
       const popupWidth = 200;
       const popupHeight = 120;
-      
+
       let top, left;
-      
+
       switch (placement) {
-        case 'top':
+        case "top":
           top = rect.top - popupHeight - 10;
           left = rect.left + (rect.width - popupWidth) / 2;
           break;
-        case 'bottom':
+        case "bottom":
           top = rect.bottom + 10;
           left = rect.left + (rect.width - popupWidth) / 2;
           break;
-        case 'left':
+        case "left":
           top = rect.top + (rect.height - popupHeight) / 2;
           left = rect.left - popupWidth - 10;
           break;
-        case 'right':
+        case "right":
           top = rect.top + (rect.height - popupHeight) / 2;
           left = rect.right + 10;
           break;
@@ -47,11 +47,13 @@ const Popconfirm = ({
 
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-      
+
       if (left < 10) left = 10;
-      if (left + popupWidth > viewportWidth - 10) left = viewportWidth - popupWidth - 10;
+      if (left + popupWidth > viewportWidth - 10)
+        left = viewportWidth - popupWidth - 10;
       if (top < 10) top = 10;
-      if (top + popupHeight > viewportHeight - 10) top = viewportHeight - popupHeight - 10;
+      if (top + popupHeight > viewportHeight - 10)
+        top = viewportHeight - popupHeight - 10;
 
       setPosition({ top, left });
     }
@@ -62,72 +64,76 @@ const Popconfirm = ({
     setIsVisible(false);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     onConfirm && onConfirm();
     hideConfirm();
-  };
+  }, [onConfirm]);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     onCancel && onCancel();
     hideConfirm();
-  };
+  }, [onCancel]);
 
-  const handleKeyDown = useCallback((e) => {
-    if (isVisible) {
-      if (e.key === 'Escape') {
-        handleCancel();
-      } else if (e.key === 'Enter') {
-        handleConfirm();
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (isVisible) {
+        if (e.key === "Escape") {
+          handleCancel();
+        } else if (e.key === "Enter") {
+          handleConfirm();
+        }
       }
-    }
-  }, [isVisible, handleCancel, handleConfirm]);
+    },
+    [isVisible, handleCancel, handleConfirm]
+  );
 
   useEffect(() => {
     if (isVisible) {
-      document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('click', (e) => {
-        if (!popupRef.current?.contains(e.target) && !triggerRef.current?.contains(e.target)) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("click", (e) => {
+        if (
+          !popupRef.current?.contains(e.target) &&
+          !triggerRef.current?.contains(e.target)
+        ) {
           hideConfirm();
         }
       });
     }
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isVisible, handleKeyDown]);
 
   return (
     <div className="popconfirm-container">
-      <div 
+      <div
         ref={triggerRef}
         onClick={showConfirm}
         className="popconfirm-trigger"
       >
         {children}
       </div>
-      
+
       {isVisible && (
-        <div 
+        <div
           ref={popupRef}
           className={`popconfirm-popup popconfirm-${placement}`}
           style={{
             top: `${position.top}px`,
-            left: `${position.left}px`
+            left: `${position.left}px`,
           }}
         >
           <div className="popconfirm-content">
-            <div className="popconfirm-title">
-              {title}
-            </div>
+            <div className="popconfirm-title">{title}</div>
             <div className="popconfirm-actions">
-              <button 
+              <button
                 onClick={handleCancel}
                 className="popconfirm-btn popconfirm-cancel"
               >
                 {cancelText}
               </button>
-              <button 
+              <button
                 onClick={handleConfirm}
                 className="popconfirm-btn popconfirm-confirm"
               >
@@ -135,7 +141,9 @@ const Popconfirm = ({
               </button>
             </div>
           </div>
-          <div className={`popconfirm-arrow popconfirm-arrow-${placement}`}></div>
+          <div
+            className={`popconfirm-arrow popconfirm-arrow-${placement}`}
+          ></div>
         </div>
       )}
     </div>
