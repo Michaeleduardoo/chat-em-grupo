@@ -131,7 +131,7 @@ const OnlineUsers = ({ onlineUsers = [], currentUser = null }) => {
     }
 
     previousUsersRef.current = usersList;
-  }, [currentUsernames, currentUser]);
+  }, [currentUsernames, currentUser, usersList]);
 
   const displayUsers = useMemo(() => {
     return usersList.length > 0
@@ -159,7 +159,7 @@ const OnlineUsers = ({ onlineUsers = [], currentUser = null }) => {
 
       {userChanges.length > 0 && (
         <div className="user-changes-notification">
-          {userChanges.map((change, index) => (
+          {userChanges.map((change) => (
             <div
               key={`${change.type}-${change.username}-${change.timestamp}`}
               className={`change-notification ${change.type}`}
