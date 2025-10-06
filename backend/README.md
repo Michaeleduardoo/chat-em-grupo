@@ -24,18 +24,12 @@ Este é o servidor backend que fornece todas as funcionalidades necessárias par
 
 ## 📦 Instalação
 
-1. **Clone o repositório** (se ainda não tiver feito):
-   ```bash
-   git clone <url-do-repositorio>
-   cd chatGrupo-main/backend
-   ```
-
-2. **Instale as dependências**:
+1. **Instale as dependências**:
    ```bash
    npm install
    ```
 
-3. **Execute o servidor**:
+2. **Execute o servidor**:
    ```bash
    # Modo desenvolvimento (com auto-reload)
    npm run dev
@@ -44,7 +38,7 @@ Este é o servidor backend que fornece todas as funcionalidades necessárias par
    npm start
    ```
 
-4. **Acesse o servidor**:
+3. **Acesse o servidor**:
    - URL: `http://localhost:3000`
    - O servidor estará rodando na porta 3000
 
@@ -332,18 +326,4 @@ Para fazer deploy em produção:
 - `npm start`: Executa o servidor em modo produção
 - `npm run dev`: Executa o servidor em modo desenvolvimento com auto-reload
 
-## 🤝 Contribuição
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
-## 📞 Suporte
-
-Para suporte ou dúvidas, abra uma issue no repositório ou entre em contato com a equipe de desenvolvimento.
+---
