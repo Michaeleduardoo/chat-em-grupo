@@ -6,6 +6,7 @@ import Popconfirm from "../Popconfirm/page.jsx";
 import LogoutLoading from "../LogoutLoading/page.jsx";
 import OnlineUsers from "../OnlineUsers/page.jsx";
 import ChatStats from "../ChatStats/page.jsx";
+import MobileMenu from "../MobileMenu/page.jsx";
 import TypingIndicator from "../TypingIndicator/page.jsx";
 import EmojiPicker from "../EmojiPicker/page.jsx";
 import ToastNotification from "../ToastNotification/page.jsx";
@@ -20,8 +21,10 @@ import {
   MdMessage,
   MdEmojiEmotions,
   MdKeyboardArrowDown,
+  MdMenu,
 } from "react-icons/md";
 import "./style.css";
+import "../MobileMenu/style.css";
 
 const Chat = () => {
   const {
@@ -50,6 +53,7 @@ const Chat = () => {
   const [replyToMessage, setReplyToMessage] = useState(null);
   const [typingUsers, setTypingUsers] = useState([]);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const inputRef = useRef(null);
@@ -283,6 +287,14 @@ const Chat = () => {
     setShowEmojiPicker(false);
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   const scrollToMessageInput = () => {
     const messageInputArea = document.querySelector(".message-input-modern");
     if (messageInputArea) {
@@ -326,6 +338,15 @@ const Chat = () => {
           </div>
 
           <div className="navbar-buttons">
+            <button
+              className="nav-btn mobile-menu-btn"
+              onClick={toggleMobileMenu}
+              title="Abrir menu"
+              aria-label="Abrir menu"
+            >
+              <MdMenu size={20} />
+            </button>
+
             <button
               className="nav-btn"
               onClick={toggleTheme}
@@ -595,6 +616,16 @@ const Chat = () => {
           onClose={() => removeNotification(notification.id)}
         />
       ))}
+
+      <MobileMenu
+        onlineUsers={onlineUsers}
+        currentUser={user}
+        stats={stats}
+        messagesCount={messages.length}
+        messages={messages}
+        isOpen={isMobileMenuOpen}
+        onClose={closeMobileMenu}
+      />
     </div>
   );
 };
