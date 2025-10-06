@@ -58,7 +58,6 @@ const MobileMenu = ({
               <ChatStats
                 stats={stats}
                 messagesCount={messagesCount}
-                onlineUsers={onlineUsers}
                 messages={messages}
                 totalUsersCount={totalUsersCount}
                 uniqueUsersCount={uniqueUsersCount}

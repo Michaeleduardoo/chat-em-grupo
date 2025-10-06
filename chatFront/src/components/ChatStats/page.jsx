@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  MdMessage,
-  MdPeople,
-  MdAttachFile,
-  MdStorage,
-  MdTrendingUp,
-  MdPerson,
-} from "react-icons/md";
+import { MdMessage, MdPeople, MdAttachFile, MdPerson } from "react-icons/md";
 import "./style.css";
 
 const ChatStats = ({
