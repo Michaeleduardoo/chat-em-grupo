@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useChat } from "../../context/ChatContext.jsx";
+import { useChat } from "../../context/useChat.jsx";
 import FilePreview from "../FilePreview/page.jsx";
 import { MdAttachFile, MdSend, MdHourglassEmpty } from "react-icons/md";
 import "./style.css";

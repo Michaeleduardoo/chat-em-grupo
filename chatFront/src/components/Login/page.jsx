@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useChat } from "../../context/ChatContext.jsx";
+import { useChat } from "../../context/useChat.jsx";
 import { MdChat, MdAttachFile, MdEmojiEmotions } from "react-icons/md";
 import "./style.css";
 
@@ -16,8 +16,8 @@ const Login = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setUser(username.trim());
-    } catch (error) {
-      console.error("Erro no login:", error);
+    } catch {
+      console.error("Erro no login");
     } finally {
       setLoading(false);
     }

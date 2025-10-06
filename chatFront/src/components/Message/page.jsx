@@ -8,7 +8,7 @@ import {
   MdCheckCircle,
 } from "react-icons/md";
 import AudioPlayer from "../AudioPlayer/page.jsx";
-import { useChat } from "../../context/ChatContext.jsx";
+import { useChat } from "../../context/useChat.jsx";
 import "./style.css";
 
 const Message = ({

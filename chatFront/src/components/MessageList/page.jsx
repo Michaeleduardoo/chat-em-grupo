@@ -1,4 +1,4 @@
-import { useChat } from "../../context/ChatContext.jsx";
+import { useChat } from "../../context/useChat.jsx";
 import Message from "../Message/page.jsx";
 import "./style.css";
 

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { useChat } from "../../context/ChatContext.jsx";
+import { useChat } from "../../context/useChat.jsx";
 import MessageList from "../MessageList/page.jsx";
 import FileUploadModal from "../FileUploadModal/page.jsx";
 import Popconfirm from "../Popconfirm/page.jsx";

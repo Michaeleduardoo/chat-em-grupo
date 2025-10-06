@@ -1,5 +1,6 @@
 import React from "react";
-import { ChatProvider, useChat } from "./context/ChatContext.jsx";
+import { ChatProvider } from "./context/ChatProvider.jsx";
+import { useChat } from "./context/useChat.jsx";
 import Login from "./components/Login/page.jsx";
 import Chat from "./components/Chat/page.jsx";
 import "./App.css";
