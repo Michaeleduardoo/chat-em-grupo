@@ -6,12 +6,15 @@ import "./style.css";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
-  const { setUser } = useChat();
+  const { setUser, error, clearError } = useChat();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username.trim()) return;
 
+    // Clear any previous errors
+    clearError();
+    
     setLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -20,6 +23,14 @@ const Login = () => {
       console.error("Erro no login");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+    // Clear error when user starts typing
+    if (error) {
+      clearError();
     }
   };
 
@@ -59,17 +70,23 @@ const Login = () => {
                   id="username"
                   name="username"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={handleUsernameChange}
                   placeholder="Digite seu nome completo"
                   required
                   disabled={loading}
                   minLength={2}
                   maxLength={50}
-                  className="input-modern"
+                  className={`input-modern ${error ? 'error' : ''}`}
                   autoComplete="name"
                 />
                 <div className="input-glow"></div>
               </div>
+              {error && (
+                <div className="error-message">
+                  <span className="error-icon">⚠️</span>
+                  {error}
+                </div>
+              )}
             </div>
 
             <button

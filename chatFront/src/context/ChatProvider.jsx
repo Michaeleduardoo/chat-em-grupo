@@ -236,6 +236,16 @@ export const ChatProvider = ({ children }) => {
         });
       });
 
+      socket.on("username-taken", (data) => {
+        console.log("❌ FRONTEND - username-taken recebido:", data);
+        dispatch({ type: "SET_ERROR", payload: data.message });
+        
+        // Disconnect the socket since the username was rejected
+        socket.disconnect();
+        dispatch({ type: "SET_SOCKET", payload: null });
+        dispatch({ type: "SET_USER", payload: null });
+      });
+
       const heartbeatInterval = setInterval(() => {
         if (socket.connected) {
           socket.emit("user-heartbeat", user);

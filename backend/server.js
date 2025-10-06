@@ -268,6 +268,20 @@ io.on('connection', (socket) => {
     console.log(`Total antes: ${totalUsersCount}`);
 
     if (username) {
+      // Check if username is already online
+      const isUsernameOnline = Array.from(onlineUsers.values()).some(user => 
+        user.username.toLowerCase() === username.toLowerCase()
+      );
+
+      if (isUsernameOnline) {
+        console.log(`❌ Nome '${username}' já está em uso`);
+        socket.emit('username-taken', {
+          message: `O nome "${username}" já está sendo usado. Escolha outro nome.`,
+          username: username
+        });
+        return;
+      }
+
       uniqueUsersHistory.add(username);
       
       onlineUsers.set(socket.id, {
