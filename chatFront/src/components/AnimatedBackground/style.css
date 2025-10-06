@@ -1,0 +1,38 @@
+/* Animated Background Styles */
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity var(--transition-normal);
+}
+
+/* Light mode adjustments */
+[data-theme="light"] .animated-background {
+  opacity: 0.3;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animated-background {
+    display: none;
+  }
+}
+
+/* Performance optimization for mobile */
+@media (max-width: 768px) {
+  .animated-background {
+    opacity: 0.2;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .animated-background {
+    opacity: 0.1;
+  }
+}
