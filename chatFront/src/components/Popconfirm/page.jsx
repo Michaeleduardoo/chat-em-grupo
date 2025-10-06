@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './style.css';
 
 const Popconfirm = ({ 
@@ -72,7 +72,7 @@ const Popconfirm = ({
     hideConfirm();
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = useCallback((e) => {
     if (isVisible) {
       if (e.key === 'Escape') {
         handleCancel();
@@ -80,7 +80,7 @@ const Popconfirm = ({
         handleConfirm();
       }
     }
-  };
+  }, [isVisible, handleCancel, handleConfirm]);
 
   useEffect(() => {
     if (isVisible) {
@@ -95,7 +95,7 @@ const Popconfirm = ({
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isVisible]);
+  }, [isVisible, handleKeyDown]);
 
   return (
     <div className="popconfirm-container">
